@@ -13,7 +13,7 @@ m2=pi*d^2/4*l2*rho;
 m_d4=pi*d^2/4*l*rho; 
 para=[m1 m2 m_d4 M g h l2 l ];
 
-PROFILE = 'trapezoidal';
+PROFILE = 'constant';
 T = T;
 n = n;
 h = 0.1;
@@ -33,7 +33,10 @@ q_dot = q_dot_plan(q, v, T, 'analytical', params);
 q_dot2 = q_dot2_plan(q, q_dot, a, T,'analytical', params);
 
 [H,C,G] = dynamics_mat(q,q_dot,para);
-for i=1:2000
+H=round(H,4)
+C=round(C,4)
+G=round(G,4)
+for i=1:200
 tau(:,i) = H(:,:)*q_dot2(:,i) + C(:,:)*q_dot(:,i) + G;
 end
 end
